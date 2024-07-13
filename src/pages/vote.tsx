@@ -117,7 +117,10 @@ export default function Vote() {
       <main className="flex flex-col min-h-[75vh] mx-auto justify-center items-center w-full p-4">
         <div className="max-w-4xl w-full">
           <div className="justify-center items-center place-content-center">
-            <h3 className="text-[35px] font-rajdhani font-medium ">
+            <h3
+              className="text-[35px] font-rajdhani font-medium"
+              style={{ textAlign: "center" }}
+            >
               CAST YOUR VOTE
             </h3>
           </div>
@@ -129,7 +132,11 @@ export default function Vote() {
                 onCandidateSelection={onCandidateSelection}
               />}
 
-            <div>
+            <div
+              style={{
+                alignSelf: "center"
+              }}
+            >
               {isConnected ? (
                 isLoading ? (
                   <Loader />
@@ -160,7 +167,7 @@ export default function Vote() {
             </div>
           </div>
         </div>
-      </main>
+      </main >
     </>
   );
 }

@@ -9,7 +9,7 @@ interface CandidateCardsProps {
 
 const CandidateCards = (props: CandidateCardsProps) => {
     const [filteredCandidates, setFilteredCandidates] = useState<Map<string, any> | null>(null);
-    const [selectedCandidate, setSelectedCandidate] = useState(null);
+    const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
 
     useEffect(() => {
         // Filter candidates based on the given pincode
@@ -20,14 +20,11 @@ const CandidateCards = (props: CandidateCardsProps) => {
             }
         });
 
-        // const candidates = candidatesData.candidates.filter(candidate =>
-        //     candidate.pincodes.includes(parseInt(props.pincode))
-        // );
         setFilteredCandidates(candidates);
         setSelectedCandidate(null); // Reset selected candidate when pincode changes
     }, [props.pincode]);
 
-    const handleCardClick = (index) => {
+    const handleCardClick = (index: string) => {
         setSelectedCandidate(index);
         props.onCandidateSelection(index);
     };
@@ -35,24 +32,28 @@ const CandidateCards = (props: CandidateCardsProps) => {
     return (
         <div className="candidate-cards">
             {filteredCandidates &&
-                // filteredCandidates.((candidate, index) => (
                 Array.from(filteredCandidates.entries()).map(([index, candidate]) => (
                     <div
                         key={index}
                         className={`candidate-card ${selectedCandidate === index ? 'selected' : ''}`}
                         onClick={() => handleCardClick(index)}
                     >
-                        <img
-                            src={candidate.candidateImage}
-                            alt={`${candidate.name}`}
-                            className="candidate-image"
-                        />
-                        <img
-                            src={candidate.partyImage}
-                            alt={`${candidate.party}`}
-                            className="party-image"
-                        />
-                        <h3>{candidate.name}</h3>
+                        <div className='flex'>
+                            <img
+                                src={candidate.partyImage}
+                                alt={`${candidate.party}`}
+                                className="party-image"
+                            />
+                        </div>
+                        <div className='flex'>
+                            <img
+                                src={candidate.candidateImage}
+                                alt={`${candidate.name}`}
+                                className="candidate-image"
+                            />
+                            <h3>{candidate.name}</h3>
+                        </div>
+
                         <p>{candidate.party}</p>
                     </div>
                 ))
