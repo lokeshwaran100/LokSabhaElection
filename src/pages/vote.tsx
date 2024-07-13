@@ -82,6 +82,7 @@ export default function Vote() {
         anonAadhaarProofs[Object.keys(anonAadhaarProofs).length - 1].pcd
       ).then((result) => {
         setAnonAadhaarCore(result);
+        console.log("Voter Pincode: ", result.proof.pincode);
       });
     }
   }, [anonAadhaar, latestProof]);
