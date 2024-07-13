@@ -58,7 +58,7 @@ export default function Results() {
     <main className="flex flex-col min-h-[75vh] mx-auto justify-around items-center w-full p-4">
       <div className="max-w-4xl w-full">
         <h2 className="text-[30px] font-rajdhani text-center font-medium leading-none">
-          VOTING RESULTS
+          LOK SABHA ELECTION RESULTS 2024
         </h2>
       </div>
       <div className="candidate-results">
@@ -67,7 +67,7 @@ export default function Results() {
             <tr>
               <th>Candidate</th>
               <th>Party</th>
-              <th>Vote Count</th>
+              <th>Votes</th>
             </tr>
           </thead>
           <tbody>
