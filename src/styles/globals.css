@@ -56,3 +56,30 @@
     margin: 0;
     color: #555;
 }
+
+/* styles.css */
+.candidate-results {
+    text-align: center;
+    padding: 20px;
+}
+
+.candidate-results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.candidate-results th,
+.candidate-results td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.candidate-results th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.candidate-results td {
+    text-align: center;
+}

@@ -3,15 +3,7 @@ import votingAbi from "../public/LokSabhaElection.json";
 
 const providerUrl = process.env.NEXT_PUBLIC_RPC_URL;
 
-export const getTotalVotes = async (useTestAadhaar: boolean): Promise<any> => {
-  const voteBreakdown = [
-    { rating: 0, percentage: 0 },
-    { rating: 1, percentage: 0 },
-    { rating: 2, percentage: 0 },
-    { rating: 3, percentage: 0 },
-    { rating: 4, percentage: 0 },
-    { rating: 5, percentage: 0 },
-  ];
+export const getCandidateVotes = async (useTestAadhaar: boolean, candidateId: string): Promise<any> => {
 
   const provider = ethers.getDefaultProvider(providerUrl);
   const voteContract = new ethers.Contract(
@@ -23,28 +15,30 @@ export const getTotalVotes = async (useTestAadhaar: boolean): Promise<any> => {
     provider
   );
 
-  const proposalCount = await voteContract.getProposalCount();
+  // const { _name, _party, voteCount } = await voteContract.getCandidate(candidateId);
+  const [_name, _party, voteCount] = await voteContract.getCandidate(candidateId);
+  console.log(typeof (voteCount))
 
-  // Initialize a variable to store the total vote count
-  let totalVoteCount = 0;
+  // // Initialize a variable to store the total vote count
+  // let totalVoteCount = 0;
 
-  // Iterate through the proposals and sum their vote counts
-  for (let i = 0; i < proposalCount; i++) {
-    const voteCount = await voteContract.getProposal(i);
-    totalVoteCount += Number(voteCount[1]);
-  }
+  // // Iterate through the proposals and sum their vote counts
+  // for (let i = 0; i < proposalCount; i++) {
+  //   const voteCount = await voteContract.getProposal(i);
+  //   totalVoteCount += Number(voteCount[1]);
+  // }
 
-  await Promise.all(
-    voteBreakdown.map(async (rating) => {
-      const voteCount = await voteContract.getProposal(rating.rating);
-      const percentage = Math.floor(
-        (Number(voteCount[1]) / totalVoteCount) * 100
-      );
-      rating.percentage = percentage;
-    })
-  );
+  // await Promise.all(
+  //   voteBreakdown.map(async (rating) => {
+  //     const voteCount = await voteContract.getProposal(rating.rating);
+  //     const percentage = Math.floor(
+  //       (Number(voteCount[1]) / totalVoteCount) * 100
+  //     );
+  //     rating.percentage = percentage;
+  //   })
+  // );
 
-  return voteBreakdown;
+  return voteCount;
 };
 
 export const hasVoted = async (

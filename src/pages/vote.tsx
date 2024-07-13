@@ -12,7 +12,7 @@ import { useAccount } from "wagmi";
 import anonAadhaarVote from "../../public/LokSabhaElection.json";
 import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
-import { writeContract } from "@wagmi/core";
+import { writeContract, waitForTransactionReceipt } from "@wagmi/core";
 import { wagmiConfig } from "../config";
 import CandidateCards from "@/components/CandidateCards";
 
@@ -58,9 +58,14 @@ export default function Vote() {
           packedGroth16Proof,
         ],
       });
+      console.log("Vote transaction: ", voteTx);
+      const transactionReceipt = await waitForTransactionReceipt(wagmiConfig, {
+        hash: voteTx,
+        pollingInterval: 1_000
+      });
+      console.log("Vote Transaction Receipt: ", transactionReceipt);
       setIsLoading(false);
       setIsSuccess(true);
-      console.log("Vote transaction: ", voteTx);
     } catch (e) {
       setIsLoading(false);
       console.log(e);
@@ -93,7 +98,7 @@ export default function Vote() {
   }, [useTestAadhaar, router, setVoted, anonAadhaarCore]);
 
   useEffect(() => {
-    // if (isSuccess) router.push("./results");
+    if (isSuccess) router.push("./results");
     if (isSuccess) setVoted(true);
   }, [router, isSuccess]);
 

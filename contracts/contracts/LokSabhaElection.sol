@@ -5,6 +5,14 @@ import "@anon-aadhaar/contracts/interfaces/IAnonAadhaar.sol";
 // import "@anon-aadhaar/contracts/interfaces/IAnonAadhaarVote.sol";
 
 contract LokSabhaElection {
+    event TestEvent(
+        uint reveal0,
+        uint reveal1,
+        uint reveal2,
+        uint reveal3,
+        uint pincode
+    );
+
     struct Candidate {
         string name;
         string party;
@@ -96,6 +104,7 @@ contract LokSabhaElection {
         // Check that the voter belongs to the candidate"s pincode
         bool isEligible = false;
         for (uint256 i = 0; i < candidates[candidateIndex].pincodes.length; i++) {
+            emit TestEvent(revealArray[0],revealArray[1],revealArray[2],revealArray[3],candidates[candidateIndex].pincodes[i]);
             if (candidates[candidateIndex].pincodes[i] == revealArray[2]) {
                 isEligible = true;
                 break;

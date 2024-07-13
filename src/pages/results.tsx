@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { getTotalVotes } from "@/utils";
+import { getCandidateVotes } from "@/utils";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "./_app";
 import { Loader } from "@/components/Loader";
@@ -7,29 +7,46 @@ import { icons } from "@/styles/illustrations";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAnonAadhaar } from "@anon-aadhaar/react";
+import candidatesData from "../../public/LokSabhaCandidates.json";
 
-const getBarHeight = (percentage: number) => {
-  return `${percentage}%`;
-};
+interface Candidate {
+  name: string;
+  party: string;
+  voteCount: number;
+}
 
-type Rating = {
-  rating: number;
-  percentage: number;
-};
+interface CandidatesData {
+  candidates: Candidate[];
+}
 
 export default function Results() {
-  const [voteBreakdown, setVoteBreakdown] = useState<Rating[] | null>(null);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
   const { useTestAadhaar } = useContext(AppContext);
   const router = useRouter();
   const [, startReq] = useAnonAadhaar();
-
   const blob = new Blob([icons.leftArrow], { type: "image/svg+xml" });
   const leftArrow = useMemo(() => URL.createObjectURL(blob), [icons.leftArrow]);
 
+  const updateCandidates = async () => {
+    let candidates: Candidate[] = [];
+    for (const [index, candidate] of candidatesData.candidates.entries()) {
+      let vote_count = await getCandidateVotes(useTestAadhaar, JSON.stringify(index));
+      candidates.push({
+        name: candidate.name,
+        party: candidate.party,
+        voteCount: vote_count.toString()
+      });
+    }
+
+    setCandidates(candidates);
+  };
+
   useEffect(() => {
-    getTotalVotes(useTestAadhaar).then((totalVotes) => {
-      setVoteBreakdown(totalVotes);
-    });
+    updateCandidates();
+  }, []);
+
+  useEffect(() => {
+    updateCandidates();
   }, [useTestAadhaar]);
 
   const onStartAgain = () => {
@@ -40,48 +57,33 @@ export default function Results() {
   return (
     <main className="flex flex-col min-h-[75vh] mx-auto justify-around items-center w-full p-4">
       <div className="max-w-4xl w-full">
-        <h2 className="text-[90px] font-rajdhani text-center font-medium leading-none">
+        <h2 className="text-[30px] font-rajdhani text-center font-medium leading-none">
           VOTING RESULTS
         </h2>
       </div>
-      <div className="flex justify-center items-end space-x-4 w-full max-w-4xl p-4">
-        {voteBreakdown ? (
-          voteBreakdown.map((data) => (
-            <div
-              className="flex flex-col font-rajdhani font-medium items-center"
-              key={data.rating}
-            >
-              <div className="w-24 h-48 flex flex-col-reverse relative">
-                <div className="w-full h-full bg-[#FFF9ED] flex flex-col-reverse">
-                  <div
-                    style={{ height: getBarHeight(data.percentage) }}
-                    className="bg-[#FD8B0E]"
-                  ></div>
-                  <div className="absolute inset-0 flex justify-center items-start pt-1">
-                    <span className="text-black font-bold">{data.rating}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-2 text-center text-gray-500">
-                {data.percentage}%
-              </div>
-            </div>
-          ))
-        ) : (
-          <Loader />
-        )}
+      <div className="candidate-results">
+        <table>
+          <thead>
+            <tr>
+              <th>Candidate</th>
+              <th>Party</th>
+              <th>Vote Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {candidates &&
+              candidates.map((candidate, index) => (
+                <tr key={index}>
+                  <td>{candidate.name}</td>
+                  <td>{candidate.party}</td>
+                  <td>{candidate.voteCount}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
+
       <p className="font-lg">
-        If you try to vote again with the same QR Code, you won’t be able to do
-        so because of your{" "}
-        <a
-          target={"_blank"}
-          rel={"noreferrer"}
-          href="https://anon-aadhaar-documentation.vercel.app/docs/nullifiers"
-          className="underline"
-        >
-          nullifier
-        </a>
         <div
           onClick={() => onStartAgain()}
           className="flex flex-row justify-center gap-2 mt-5 hover:underline cursor-pointer"
