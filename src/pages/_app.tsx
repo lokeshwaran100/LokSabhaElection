@@ -20,8 +20,8 @@ createWeb3Modal({
 
 export const AppContext = createContext({
   useTestAadhaar: false,
-  setIsTestMode: (isTest: boolean) => {},
-  setVoted: (voted: boolean) => {},
+  setIsTestMode: (isTest: boolean) => { },
+  setVoted: (voted: boolean) => { },
 });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -41,8 +41,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Anon Aadhaar Example</title>
-        <meta property="og:title" content="Anon Aadhaar Example" key="title" />
+        <title>Lok Sabha Election</title>
+        <meta property="og:title" content="Lok Sabha Election" key="title" />
         <meta
           property="og:image"
           content="https://anon-aadhaar-example.vercel.app/AnonAadhaarBanner.png"

@@ -5,8 +5,8 @@ import { walletConnect } from "wagmi/connectors";
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
 
 const metadata = {
-  name: "Anon Aadhaar",
-  description: "Example voting app",
+  name: "Lok Sabha Election",
+  description: "Lok Sabha Election 2024",
   url: "https://localhost:3000/",
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };

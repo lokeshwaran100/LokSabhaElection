@@ -35,7 +35,7 @@ export const Footer: FunctionComponent<FooterProps> = ({
 
   useEffect(() => {
     useTestAadhaar
-      ? setContractAddr(process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST!)
+      ? setContractAddr(process.env.NEXT_PUBLIC_LOKSABHA_ELECTION_CONTRACT_ADDRESS!)
       : setContractAddr(process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD!);
   }, [useTestAadhaar]);
 
@@ -47,28 +47,34 @@ export const Footer: FunctionComponent<FooterProps> = ({
           <a
             target={"_blank"}
             rel={"noreferrer"}
-            href="https://anon-aadhaar-documentation.vercel.app/docs/quick-setup"
+            href="https://devfolio.co/@lokeshwaran100"
           >
             <div className="flex flex-row text-sm items-center text-black font-rajdhani font-medium gap-1 hover:underline">
-              <p className="leading-none text-lg pt-1">TUTORIAL</p>
+              <p className="leading-none text-lg pt-1">DEVELOPER</p>
               <Image
                 priority
                 src={externalLinkIcon}
                 width={20}
                 height={20}
-                alt="Check our tutorial"
+                alt="Developer Devfolio Profile"
                 className="leading-none"
               />
             </div>
           </a>
           <div className="flex flex-row justify-center items-center gap-8">
-            <p className="text-lg text-black font-rajdhani font-medium underline">
-              {shortenAddress("0x" + contractAddr?.toUpperCase())}
-            </p>
             <a
               target={"_blank"}
               rel={"noreferrer"}
-              href="https://github.com/privacy-scaling-explorations/anon-aadhaar"
+              href={"https://sepolia.etherscan.io/address/0x" + contractAddr}
+            >
+              <p className="text-lg text-black font-rajdhani font-medium underline">
+                {shortenAddress("0x" + contractAddr?.toUpperCase())}
+              </p>
+            </a>
+            <a
+              target={"_blank"}
+              rel={"noreferrer"}
+              href="https://github.com/lokeshwaran100/LokSabhaElection"
             >
               <Image
                 alt="github"

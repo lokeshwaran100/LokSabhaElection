@@ -1,3 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* styles.css */
+.app {
+    text-align: center;
+    padding: 20px;
+}
+
+.candidate-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.candidate-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.candidate-card.selected {
+    border-color: #007bff;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+    transform: translateY(-5px);
+}
+
+.candidate-card img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.candidate-card .candidate-image {
+    height: 100px;
+}
+
+.candidate-card .party-image {
+    height: 50px;
+    margin-top: 10px;
+}
+
+.candidate-card h3 {
+    margin: 10px 0 5px;
+}
+
+.candidate-card p {
+    margin: 0;
+    color: #555;
+}

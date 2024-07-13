@@ -33,7 +33,7 @@ const LaunchMode = ({
           color: "#009A08",
           fontFamily: "rajdhani",
         }}
-        buttonTitle={isTest ? "USE TEST CREDENTIALS" : "USE REAL CREDENTIALS"}
+        buttonTitle={isTest ? "VERIFY YOUR IDENTITY" : "USE REAL CREDENTIALS"}
         useTestAadhaar={isTest}
       />
     </span>
@@ -57,16 +57,11 @@ export default function Home() {
     <>
       <main className="flex flex-col min-h-[75vh] mx-auto justify-center items-center w-full p-4">
         <div className="max-w-4xl w-full">
-          <h6 className="text-[36px] font-rajdhani font-medium leading-none">
-            ANON AADHAAR
+          <h6 className="text-[30px] font-rajdhani font-medium leading-none">
+            LOK SABHA ELECTION 2024
           </h6>
-          <h2 className="text-[90px] font-rajdhani font-medium leading-none">
-            EXAMPLE VOTING APP
-          </h2>
           <div className="text-md mt-4 mb-8 text-[#717686]">
-            This process ensures anonymity by utilizing the Aadhaar secure QR
-            code (present on e-Aadhaar and the printed Aadhaar letter) which
-            preserves the confidentiality of the Aadhaar number.
+            Upload your Aadhaar QR code to verify your identity and cast your vote.
           </div>
 
           <div className="flex w-full gap-8 mb-8">

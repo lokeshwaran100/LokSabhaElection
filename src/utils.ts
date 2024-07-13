@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import votingAbi from "../public/AnonAadhaarVote.json";
+import votingAbi from "../public/LokSabhaElection.json";
 
 const providerUrl = process.env.NEXT_PUBLIC_RPC_URL;
 
@@ -15,12 +15,11 @@ export const getTotalVotes = async (useTestAadhaar: boolean): Promise<any> => {
 
   const provider = ethers.getDefaultProvider(providerUrl);
   const voteContract = new ethers.Contract(
-    `0x${
-      useTestAadhaar
-        ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
-        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
+    `0x${useTestAadhaar
+      ? process.env.NEXT_PUBLIC_LOKSABHA_ELECTION_CONTRACT_ADDRESS
+      : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
     }`,
-    votingAbi.abi,
+    votingAbi,
     provider
   );
 
@@ -54,12 +53,11 @@ export const hasVoted = async (
 ): Promise<boolean> => {
   const provider = ethers.getDefaultProvider(providerUrl);
   const voteContract = new ethers.Contract(
-    `0x${
-      useTestAadhaar
-        ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
-        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
+    `0x${useTestAadhaar
+      ? process.env.NEXT_PUBLIC_LOKSABHA_ELECTION_CONTRACT_ADDRESS
+      : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
     }`,
-    votingAbi.abi,
+    votingAbi,
     provider
   );
 

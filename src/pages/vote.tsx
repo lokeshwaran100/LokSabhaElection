@@ -6,15 +6,15 @@ import {
   packGroth16Proof,
 } from "@anon-aadhaar/core";
 import { useEffect, useState, useContext } from "react";
-import { Ratings } from "@/components/Ratings";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
-import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
+import anonAadhaarVote from "../../public/LokSabhaElection.json";
 import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
 import { writeContract } from "@wagmi/core";
 import { wagmiConfig } from "../config";
+import CandidateCards from "@/components/CandidateCards";
 
 export default function Vote() {
   const [anonAadhaar] = useAnonAadhaar();
@@ -23,12 +23,12 @@ export default function Vote() {
   const [anonAadhaarCore, setAnonAadhaarCore] = useState<AnonAadhaarCore>();
   const router = useRouter();
   const { isConnected, address } = useAccount();
-  const [rating, setRating] = useState<string>();
+  const [candidateId, setCandidateId] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const sendVote = async (
-    _rating: string,
+    _candidateId: string,
     _anonAadhaarCore: AnonAadhaarCore
   ) => {
     const packedGroth16Proof = packGroth16Proof(
@@ -37,14 +37,14 @@ export default function Vote() {
     setIsLoading(true);
     try {
       const voteTx = await writeContract(wagmiConfig, {
-        abi: anonAadhaarVote.abi,
+        abi: anonAadhaarVote,
         address: `0x${useTestAadhaar
-          ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
+          ? process.env.NEXT_PUBLIC_LOKSABHA_ELECTION_CONTRACT_ADDRESS
           : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
           }`,
-        functionName: "voteForProposal",
+        functionName: "voteForCandidate",
         args: [
-          _rating,
+          _candidateId,
           _anonAadhaarCore.proof.nullifierSeed,
           _anonAadhaarCore.proof.nullifier,
           _anonAadhaarCore.proof.timestamp,
@@ -76,10 +76,7 @@ export default function Vote() {
       deserialize(
         anonAadhaarProofs[Object.keys(anonAadhaarProofs).length - 1].pcd
       ).then((result) => {
-        console.log(result);
         setAnonAadhaarCore(result);
-        console.log(result.proof.pincode);
-        console.log(packGroth16Proof(result.proof.groth16Proof));
       });
     }
   }, [anonAadhaar, latestProof]);
@@ -88,7 +85,7 @@ export default function Vote() {
     anonAadhaarCore?.proof.nullifier
       ? hasVoted(anonAadhaarCore?.proof.nullifier, useTestAadhaar).then(
         (response) => {
-          if (response) router.push("/results");
+          // if (response) router.push("/results");
           setVoted(response);
         }
       )
@@ -96,37 +93,36 @@ export default function Vote() {
   }, [useTestAadhaar, router, setVoted, anonAadhaarCore]);
 
   useEffect(() => {
-    if (isSuccess) router.push("./results");
+    // if (isSuccess) router.push("./results");
+    if (isSuccess) setVoted(true);
   }, [router, isSuccess]);
 
   useEffect(() => {
     if (!anonAadhaar || anonAadhaar.status !== "logged-in") {
       router.push(".");
-    } else {
-      // console.log("anonAadhaar.anonAadhaarProofs", anonAadhaar.anonAadhaarProofs);
-      // console.log("anonAadhaar.serializedAnonAadhaarProof", anonAadhaar.serializedAnonAadhaarProof);
     }
   }, [anonAadhaar, router]);
+
+  const onCandidateSelection = (candidate_id: string) => {
+    setCandidateId(candidate_id);
+  };
 
   return (
     <>
       <main className="flex flex-col min-h-[75vh] mx-auto justify-center items-center w-full p-4">
         <div className="max-w-4xl w-full">
-          <h2 className="text-[90px] font-rajdhani font-medium leading-none">
-            CAST YOUR VOTE
-          </h2>
-          <div className="text-md mt-4 mb-8 text-[#717686]">
-            Next, you have the option to cast your vote alongside your Anon
-            Adhaar proof, using your connected ETH address. Your vote will be
-            paired with your proof, and the smart contract will initially verify
-            your proof before processing your vote.
+          <div className="justify-center items-center place-content-center">
+            <h3 className="text-[35px] font-rajdhani font-medium ">
+              CAST YOUR VOTE
+            </h3>
           </div>
 
           <div className="flex flex-col gap-5">
-            <div className="text-sm sm:text-lg font-medium font-rajdhani">
-              {"On a scale of 0 to 5, how likely are you to recommend this hack?".toUpperCase()}
-            </div>
-            <Ratings setRating={setRating} />
+            {anonAadhaarCore !== undefined &&
+              <CandidateCards
+                pincode={anonAadhaarCore.proof.pincode}
+                onCandidateSelection={onCandidateSelection}
+              />}
 
             <div>
               {isConnected ? (
@@ -135,13 +131,13 @@ export default function Vote() {
                 ) : (
                   <button
                     disabled={
-                      rating === undefined || anonAadhaarCore === undefined
+                      candidateId === undefined || anonAadhaarCore === undefined
                     }
                     type="button"
                     className="inline-block mt-5 bg-[#009A08] rounded-lg text-white px-14 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
                     onClick={() => {
-                      if (rating !== undefined && anonAadhaarCore !== undefined)
-                        sendVote(rating, anonAadhaarCore);
+                      if (candidateId !== undefined && anonAadhaarCore !== undefined)
+                        sendVote(candidateId, anonAadhaarCore);
                     }}
                   >
                     VOTE
