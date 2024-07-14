@@ -2,7 +2,7 @@
     "candidates": [
         {
             "name": "Candidate A",
-            "party": "Party Alpha",
+            "party": "Alpha",
             "partyImage": "party-alpha.svg",
             "candidateImage": "candidate-a.svg",
             "pincodes": [
@@ -13,7 +13,7 @@
         },
         {
             "name": "Candidate B",
-            "party": "Party Beta",
+            "party": "Beta",
             "partyImage": "party-beta.svg",
             "candidateImage": "candidate-b.svg",
             "pincodes": [
@@ -24,36 +24,34 @@
         },
         {
             "name": "Candidate C",
-            "party": "Party Gamma",
+            "party": "Gamma",
             "partyImage": "party-gamma.svg",
             "candidateImage": "candidate-c.svg",
             "pincodes": [
                 110007,
                 110008,
-                110009
+                110051
             ]
         },
         {
             "name": "Candidate D",
-            "party": "Party Delta",
+            "party": "Delta",
             "partyImage": "party-delta.svg",
             "candidateImage": "candidate-d.svg",
             "pincodes": [
                 110010,
                 110011,
-                110012,
                 110051
             ]
         },
         {
             "name": "Candidate E",
-            "party": "Party Epsilon",
+            "party": "Epsilon",
             "partyImage": "party-epsilon.svg",
             "candidateImage": "candidate-e.svg",
             "pincodes": [
                 110013,
                 110014,
-                110015,
                 110051
             ]
         }
