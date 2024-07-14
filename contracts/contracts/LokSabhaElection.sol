@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 import "@anon-aadhaar/contracts/interfaces/IAnonAadhaar.sol";
-// import "@anon-aadhaar/contracts/interfaces/IAnonAadhaarVote.sol";
 
 contract LokSabhaElection {
     event TestEvent(
