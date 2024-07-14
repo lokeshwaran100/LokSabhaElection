@@ -38,19 +38,19 @@ For reference, see the sample [LokSabhaCandidates.json](public/LokSabhaCandidate
 
 ### 2. Deploy the Solidity Smart Contract
 
-The smart contract `LokSabhaElection.sol` is located in the `contracts/contracts` directory. Deploy the contract using the following command from the `contracts` directory:
+The smart contract `LokSabhaElection.sol` is located in the `contracts/contracts` directory. Update the `.env` file with `HARD_HAT_PRIVATE_KEY`, and `NEXT_PUBLIC_ANON_AADHAAR_CONTRACT_ADDRESS` variables without `0x` prefix along with `NEXT_PUBLIC_RPC_URL`. Deploy the contract using the following command from the `contracts` directory:
 
 ```bash
 cd contracts
-ts-node script/deploy.ts
+npx hardhat run scripts/deploy.ts --network sepolia
 ```
 
 ### 3. Update `.env` File
 
-After deploying the contract, update the `.env` file with the deployed contract address:
+After deploying the contract, update the `.env` file with the deployed contract address without `0x` prefix:
 
 ```plaintext
-NEXT_PUBLIC_LOKSABHA_CONTRACT_ADDRESS=0xYourDeployedContractAddress
+NEXT_PUBLIC_LOKSABHA_CONTRACT_ADDRESS=YourDeployedContractAddress
 ```
 
 ### 4. Deploy the Frontend
