@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Lok Sabha Election Project demonstrates how the Election Commission can leverage blockchain technology to conduct a transparent and secure general election. This application allows citizens to cast their votes for candidates using their Aadhaar card for identity verification. The voting system ensures that each vote is cast only for candidates matching the voter's pincode.
+The Lok Sabha Election Project demonstrates how the Election Commission can leverage blockchain technology to conduct a transparent and secure general election. This application allows citizens to cast their votes for candidates using their Aadhaar card for identity verification. The voting system ensures that each vote is cast only for candidates matching the voter's pincode. Click to watch the [Demo Video](https://drive.google.com/file/d/1Q6z4DRtmFnMqO92cYF25q0L6xIWt1wiM/view?usp=sharing)
 
 ## Anon Aadhaar Protocol
 
